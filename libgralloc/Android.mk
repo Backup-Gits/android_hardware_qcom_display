@@ -30,10 +30,14 @@ endif
 LOCAL_CFLAGS                  := $(common_flags) -DLOG_TAG=\"qdgralloc\" -Wno-sign-conversion
 LOCAL_ADDITIONAL_DEPENDENCIES := $(common_deps) $(kernel_deps)
 LOCAL_SRC_FILES               := gpu.cpp gralloc.cpp framebuffer.cpp mapper.cpp
-LOCAL_COPY_HEADERS_TO         := $(common_header_export_path)
-LOCAL_COPY_HEADERS            := gralloc_priv.h gr.h adreno_utils.h
+LOCAL_EXPORT_HEADER_LIBRARY_HEADERS := gralloc.$(TARGET_BOARD_PLATFORM)_headers
 
 include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := gralloc.$(TARGET_BOARD_PLATFORM)_headers
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include/gralloc
+include $(BUILD_HEADER_LIBRARY)
 
 # MemAlloc Library
 include $(CLEAR_VARS)
@@ -47,6 +51,12 @@ LOCAL_SHARED_LIBRARIES        := $(common_libs) libqdutils libdl
 LOCAL_CFLAGS                  := $(common_flags) -DLOG_TAG=\"qdmemalloc\" -Wno-sign-conversion
 LOCAL_ADDITIONAL_DEPENDENCIES := $(common_deps) $(kernel_deps)
 LOCAL_SRC_FILES               := ionalloc.cpp alloc_controller.cpp
-LOCAL_COPY_HEADERS            := alloc_controller.h memalloc.h
+LOCAL_EXPORT_C_INCLUDE_DIRS   := $(LOCAL_PATH)/include/memalloc
+LOCAL_EXPORT_HEADER_LIBRARY_HEADERS := memalloc.$(TARGET_BOARD_PLATFORM)_headers
 
 include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := memalloc.$(TARGET_BOARD_PLATFORM)_headers
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include/memalloc
+include $(BUILD_HEADER_LIBRARY)

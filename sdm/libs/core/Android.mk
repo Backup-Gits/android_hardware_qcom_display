@@ -55,30 +55,10 @@ endif
 
 include $(BUILD_SHARED_LIBRARY)
 
-SDM_HEADER_PATH := ../../include
-include $(CLEAR_VARS)
-LOCAL_VENDOR_MODULE           := true
-LOCAL_COPY_HEADERS_TO         := $(common_header_export_path)/sdm/core
-LOCAL_COPY_HEADERS             = $(SDM_HEADER_PATH)/core/buffer_allocator.h \
-                                 $(SDM_HEADER_PATH)/core/buffer_sync_handler.h \
-                                 $(SDM_HEADER_PATH)/core/core_interface.h \
-                                 $(SDM_HEADER_PATH)/core/debug_interface.h \
-                                 $(SDM_HEADER_PATH)/core/display_interface.h \
-                                 $(SDM_HEADER_PATH)/core/layer_buffer.h \
-                                 $(SDM_HEADER_PATH)/core/layer_stack.h \
-                                 $(SDM_HEADER_PATH)/core/sdm_types.h \
-                                 $(SDM_HEADER_PATH)/core/socket_handler.h
-include $(BUILD_COPY_HEADERS)
+LOCAL_EXPORT_HEADER_LIBRARY_HEADERS := sdmcore.$(TARGET_BOARD_PLATFORM)_headers
 
 include $(CLEAR_VARS)
+LOCAL_MODULE                  := sdmcore.$(TARGET_BOARD_PLATFORM)_headers
 LOCAL_VENDOR_MODULE           := true
-LOCAL_COPY_HEADERS_TO         := $(common_header_export_path)/sdm/private
-LOCAL_COPY_HEADERS             = $(SDM_HEADER_PATH)/private/color_interface.h \
-                                 $(SDM_HEADER_PATH)/private/color_params.h \
-                                 $(SDM_HEADER_PATH)/private/extension_interface.h \
-                                 $(SDM_HEADER_PATH)/private/hw_info_types.h \
-                                 $(SDM_HEADER_PATH)/private/partial_update_interface.h \
-                                 $(SDM_HEADER_PATH)/private/resource_interface.h \
-                                 $(SDM_HEADER_PATH)/private/strategy_interface.h \
-                                 $(SDM_HEADER_PATH)/private/dpps_control_interface.h
-include $(BUILD_COPY_HEADERS)
+LOCAL_EXPORT_C_INCLUDE_DIRS   := $(LOCAL_PATH)/include
+include $(BUILD_HEADER_LIBRARY)

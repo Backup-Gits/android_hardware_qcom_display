@@ -35,14 +35,19 @@ LOCAL_SRC_FILES               := gr_ion_alloc.cpp \
                                  gr_allocator.cpp \
                                  gr_buf_mgr.cpp \
                                  gr_device_impl.cpp
-LOCAL_COPY_HEADERS_TO         := $(common_header_export_path)
-LOCAL_COPY_HEADERS            := gr_device_impl.h
+LOCAL_EXPORT_HEADER_LIBRARY_HEADERS := gralloc.$(TARGET_BOARD_PLATFORM)_headers
+
 
 ifeq ($(call is-board-platform-in-list, msm8909), true)
     LOCAL_CFLAGS += -DUSE_SECURE_HEAP
 endif
 
 include $(BUILD_SHARED_LIBRARY)
+
+include $(CLEAR_VARS)
+LOCAL_MODULE := gralloc.$(TARGET_BOARD_PLATFORM)_headers
+LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/include
+include $(BUILD_HEADER_LIBRARY)
 
 #libgrallocutils
 include $(CLEAR_VARS)
