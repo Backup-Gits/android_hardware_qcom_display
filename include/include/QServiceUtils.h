@@ -1,0 +1,1 @@
+../libqservice/QServiceUtils.h
